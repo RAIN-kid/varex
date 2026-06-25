@@ -35,7 +35,7 @@ export default function AboutSnippet() {
               className="absolute top-6 right-0 w-[85%] h-[65%] z-10 shadow-2xl overflow-hidden"
             >
               <img 
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6XyKINoUC2qn0l7JXQTmmS3ioWytzn1SAbZzHef-nblsJ43M9ZEX4LrQY&s=10" 
+                src="images/about11.jpg" 
                 alt="Varex Main Engineering" 
                 className="w-full h-full object-cover hover:scale-110 transition-transform duration-1000"
               />
@@ -51,7 +51,7 @@ export default function AboutSnippet() {
               className="absolute bottom-6 left-0 w-[60%] h-[45%] z-20 border-8 border-[#F8FAFC] shadow-xl overflow-hidden"
             >
               <img 
-                src="https://www.hahnautomation.group/fileadmin/user_upload/case-studies/Electronics-case-study_Tube-Rolling/Automated-tube-rolling_04.jpg" 
+                src="images/about12.webp" 
                 alt="Varex Equipment Detail" 
                 className="w-full h-full object-cover"
               />

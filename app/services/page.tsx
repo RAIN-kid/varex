@@ -3,18 +3,22 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Zap, Gauge, Network, ShieldCheck, Droplet, Settings, 
+  Zap, Gauge, Network, ShieldCheck,
   ChevronRight, CheckCircle2, ChevronDown, ArrowRight 
 } from 'lucide-react';
 import Link from 'next/link';
 
-// Data Kamili kutoka kwenye Company Profile PDF (IDs updated kuendana na Navbar)
+// Data Kamili: Specialized & Pumps zimetolewa, Picha mpya zimewekwa (zinakubali Array kwa ajili ya Slider)
 const servicesData = [
   {
     id: 'electrical',
     title: 'Electrical engineering',
     icon: <Zap size={24} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=2069&auto=format&fit=crop',
+    images: [
+      '/images/service-elecctrical1.jpeg',
+      '/images/service-elecctrical2.jpeg',
+      '/images/service-elecctrical3.jpeg'
+    ],
     description: 'Comprehensive electrical solutions spanning installation, diagnostics, and maintenance for industrial systems.',
     features: [
       'High, Medium and Low Voltage (HV/MV/LV) switchgear installation',
@@ -31,7 +35,10 @@ const servicesData = [
     id: 'instrumentation',
     title: 'Instrumentation & automation',
     icon: <Gauge size={24} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=2070&auto=format&fit=crop',
+    images: [
+      '/images/service-auto1.jpeg',
+      '/images/service-auto2.jpeg'
+    ],
     description: 'Precision measurement and automated control systems to optimize your industrial processes.',
     features: [
       'Installation and calibration of flow meters, pressure transmitters, and level sensors',
@@ -43,7 +50,9 @@ const servicesData = [
     id: 'fiber',
     title: 'Fiber optic & IT services',
     icon: <Network size={24} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2070&auto=format&fit=crop',
+    images: [
+      '/images/service-it.avif'
+    ], // Hii haikutajwa, inabaki na picha moja
     description: 'Robust industrial networking and communication infrastructure tailored for high-speed data transfer.',
     features: [
       'Fiber optic splicing (single-mode and multi-mode)',
@@ -56,7 +65,10 @@ const servicesData = [
     id: 'cathodic',
     title: 'Cathodic protection services',
     icon: <ShieldCheck size={24} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2069&auto=format&fit=crop',
+    images: [
+      '/images/services-cathodic1.jpg',
+      '/images/services-cathodic2.jpg'
+    ],
     description: 'Advanced corrosion prevention systems to safeguard critical industrial infrastructure and extend asset lifespan.',
     features: [
       'System design and engineering',
@@ -73,36 +85,51 @@ const servicesData = [
       'Industrial plants and refineries',
       'Reinforced concrete structures and infrastructure'
     ]
-  },
-  {
-    id: 'pumps',
-    title: 'Pumps & compressors',
-    icon: <Droplet size={24} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop',
-    description: 'Reliable fluid and air handling equipment supporting heavy-duty industrial applications.',
-    features: [
-      'Chemical, slurry, and dosing pumps',
-      'Progressive cavity pumps',
-      'Dewatering and drainage pumps',
-      'Compressors, air dryers, and filtration systems'
-    ]
-  },
-  {
-    id: 'special',
-    title: 'Specialized equipment services',
-    icon: <Settings size={24} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1581092335397-9583eb92d232?q=80&w=2070&auto=format&fit=crop',
-    description: 'Expert design, installation, and maintenance for specialized industrial and mining machinery.',
-    features: [
-      'Larox press filter machines (Design, installation, maintenance, spare parts)',
-      'Exciters & Reactors (Design, installation, maintenance, spare parts)',
-      'Conveyor belt weightometers (Calibration, servicing, spare parts)',
-      'Carbon regeneration kilns (Installation and maintenance)',
-      'Thermal oil heaters & Gold room rectifiers',
-      'Oxygen plants (Design, installation, commissioning, and maintenance)'
-    ]
   }
 ];
+
+// Component Maalum kwa ajili ya kufanya Slide Show kwenye Picha za Huduma
+const ServiceImageSlider = ({ images, title }: { images: string[], title: string }) => {
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const timer = setInterval(() => {
+      setIdx((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    }, 4000); // Inabadilisha picha kila baada ya sekunde 4
+    return () => clearInterval(timer);
+  }, [images]);
+
+  return (
+    <div className="w-full h-full relative">
+      <AnimatePresence initial={false}>
+        <motion.img
+          key={idx}
+          src={images[idx]}
+          alt={title}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </AnimatePresence>
+      
+      {/* Vidoti vinavyoonyesha idadi ya picha (vinaonekana tu kama picha ziko zaidi ya 1) */}
+      {images.length > 1 && (
+        <div className="absolute top-4 right-4 flex gap-1.5 z-20">
+          {images.map((_, i) => (
+            <div 
+              key={i} 
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === idx ? 'w-4 bg-brand-orange' : 'w-1.5 bg-white/60'}`} 
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 
 export default function ServicesPage() {
   const [activeService, setActiveService] = useState(servicesData[0].id);
@@ -111,7 +138,6 @@ export default function ServicesPage() {
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     if (hash) {
-      // Kama amebonyeza "Cathodic Protection Applications" (cathodic2), mfungulie "cathodic"
       const targetId = hash === 'cathodic2' ? 'cathodic' : hash;
       if (servicesData.some(s => s.id === targetId)) {
         setActiveService(targetId);
@@ -135,7 +161,7 @@ export default function ServicesPage() {
       <section className="relative h-[35vh] min-h-[300px] bg-brand-blue flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1581092746498-1e4e2694b80b?q=80&w=2070&auto=format&fit=crop" 
+            src="images/service-elecctrical3.jpeg" 
             alt="Engineering Services" 
             className="w-full h-full object-cover"
           />
@@ -215,14 +241,12 @@ export default function ServicesPage() {
                   transition={{ duration: 0.4, ease: 'easeOut' }}
                   className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden"
                 >
+                  {/* Container ya Picha na Slide Show Mpya */}
                   <div className="w-full h-[400px] overflow-hidden relative">
-                    <img 
-                      src={activeData.image} 
-                      alt={activeData.title} 
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div className="absolute bottom-8 left-8 flex items-center gap-4">
+                    <ServiceImageSlider images={activeData.images} title={activeData.title} />
+                    
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none z-10" />
+                    <div className="absolute bottom-8 left-8 flex items-center gap-4 z-20">
                       <div className="w-14 h-14 bg-brand-orange text-white flex items-center justify-center rounded-xl shadow-lg">
                         {activeData.icon}
                       </div>
@@ -291,8 +315,9 @@ export default function ServicesPage() {
                           className="overflow-hidden"
                         >
                           <div className="p-5 border-t border-gray-100">
-                            <div className="w-full h-[200px] rounded-xl overflow-hidden mb-6">
-                              <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
+                            {/* Mobile Image Slider */}
+                            <div className="w-full h-[200px] rounded-xl overflow-hidden mb-6 relative">
+                              <ServiceImageSlider images={service.images} title={service.title} />
                             </div>
                             
                             <p className="text-gray-600 text-sm leading-relaxed mb-6">
@@ -334,23 +359,33 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* 3. BOTTOM CTA */}
-      <section className="py-20 bg-brand-orange">
+      {/* 3. BOTTOM CTA BLOCK - Imefananishwa na Navbar (Rangi Nyeupe, Maandishi Bluu) */}
+      <section className="py-20 bg-white border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-brand-orange font-bold uppercase tracking-widest text-sm mb-4">Beyond Engineering</h2>
-          <h3 className="text-3xl md:text-5xl font-bold text-white mb-8">
+          <h3 className="text-3xl md:text-5xl font-bold text-brand-blue mb-8">
             Looking for high-quality industrial equipment?
           </h3>
+          <p className="text-gray-600 text-lg mb-10 max-w-2xl mx-auto font-medium">
+            We partner with global brands to supply premium equipment, sensors, and components that power modern infrastructure.
+          </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link 
               href="/supply" 
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-brand-blue px-8 py-4 font-bold capitalize text-sm hover:bg-gray-100 transition-colors rounded-xl"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-blue text-white px-8 py-4 font-bold capitalize text-sm hover:bg-opacity-90 transition-colors rounded-xl shadow-lg"
             >
               Explore supply scope <ArrowRight size={18} />
+            </Link>
+            <Link 
+              href="/contact" 
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-transparent border-2 border-brand-blue text-brand-blue px-8 py-4 font-bold capitalize text-sm hover:bg-gray-50 transition-colors rounded-xl"
+            >
+              Contact our team
             </Link>
           </div>
         </div>
       </section>
+
     </main>
   );
 }

@@ -12,22 +12,41 @@ export default function ContactPage() {
     subject: '',
     message: ''
   });
+  
+  // Tunazirudisha hizi state kwa ajili ya animation yetu nzuri
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Mfumo mpya wa kutuma form kimya kimya (Background Fetch)
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Hapa ni mfano wa animation ya kutuma message (sekunde 1.5)
-    setTimeout(() => {
+
+    try {
+      const response = await fetch('https://formspree.io/f/meebaonr', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        // Ikituma kikamilifu, onyesha Tiki ya kijani
+        setIsSubmitted(true);
+        setFormData({ name: '', email: '', subject: '', message: '' }); // Futa maneno kwenye form
+        
+        // Rudisha form mpya baada ya sekunde 5
+        setTimeout(() => setIsSubmitted(false), 5000);
+      } else {
+        alert("Oops! There was a problem submitting your form.");
+      }
+    } catch (error) {
+      alert("Oops! There was a network error.");
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      
-      // Rudisha fomu kawaida baada ya sekunde 4
-      setTimeout(() => setIsSubmitted(false), 4000);
-    }, 1500);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -142,7 +161,7 @@ export default function ContactPage() {
               </div>
             </motion.div>
 
-            {/* KULIA: Fomu ya Kisasa */}
+            {/* KULIA: Fomu Inayofanya Kazi Bila Ku-Redirect */}
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -153,8 +172,9 @@ export default function ContactPage() {
               
               <AnimatePresence mode="wait">
                 {isSubmitted ? (
-                  /* Success Message */
+                  /* Success Message Animation */
                   <motion.div 
+                    key="success"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
@@ -167,8 +187,9 @@ export default function ContactPage() {
                     <p className="text-gray-500">Thank you for contacting Varex Group. Our team will get back to you shortly.</p>
                   </motion.div>
                 ) : (
-                  /* Form */
+                  /* Form - Inatumia onSubmit yenye Fetch API */
                   <motion.form 
+                    key="form"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -261,7 +282,6 @@ export default function ContactPage() {
           3. GOOGLE MAP SECTION
           ========================================= */}
       <section className="w-full h-[400px] md:h-[500px] bg-gray-200 relative">
-        {/* Iframe ya Ramani (Placeholder ya Goba, Dar es Salaam) */}
         <iframe 
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63385.74815152285!2d39.1558231!3d-6.751325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185c4e339bba6db3%3A0xc6ebfb937eb7c8a6!2sGoba%2C%20Dar%20es%20Salaam%2C%20Tanzania!5e0!3m2!1sen!2sus!4v1716301234567!5m2!1sen!2sus" 
           width="100%" 
@@ -272,7 +292,6 @@ export default function ContactPage() {
           referrerPolicy="no-referrer-when-downgrade"
           className="grayscale hover:grayscale-0 transition-all duration-700"
         />
-        {/* Block inayoelea juu ya Ramani (Msisitizo wa mwisho) */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white px-8 py-4 rounded-xl shadow-2xl border border-gray-100 flex items-center gap-3 w-[90%] md:w-auto justify-center">
           <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
           <span className="font-bold text-brand-blue text-sm">We operate globally, engineered locally.</span>

@@ -76,7 +76,7 @@ export default function AboutPage() {
               className="lg:col-span-7 lg:col-start-1 lg:row-start-1 h-[400px] lg:h-[550px] z-0 shadow-lg"
             >
               <img 
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF44Jmxw2t1tXjbcY_BuQdh8ZdSmi0QaDCikP7ANpbfzI9SsUSWnlBCkq2&s=10" 
+                src="images/about21.jpg"
                 alt="Varex Company Overview" 
                 className="w-full h-full object-cover"
               />
@@ -206,7 +206,7 @@ export default function AboutPage() {
               className="order-1 lg:order-none lg:col-span-7 lg:col-start-6 lg:row-start-1 h-[400px] lg:h-[550px] z-0 shadow-lg"
             >
               <img 
-                src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=2070&auto=format&fit=crop" 
+                src="images/about22.avif" 
                 alt="Why Choose Varex Group" 
                 className="w-full h-full object-cover"
               />

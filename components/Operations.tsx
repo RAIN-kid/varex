@@ -54,7 +54,7 @@ export default function Operations() {
             >
               {/* PICHA MPYA INAYOFANYA KAZI VIZURI */}
               <img 
-                src="https://productimages.withfloats.com/tile/5f1beeaedd5b640001427441.jpg" 
+                src="images/operation1.avif" 
                 alt="Engineering Services" 
                 className="w-full h-full object-cover shadow-lg"
               />
@@ -105,7 +105,7 @@ export default function Operations() {
               className="order-1 lg:order-none lg:col-span-7 lg:col-start-6 lg:row-start-1 h-[400px] lg:h-[550px] z-0"
             >
               <img 
-                src="https://vertex-egy.com/storage/images/services/687f945dce32f.png" 
+                src="images/operation2.png" 
                 alt="Industrial Supply Scope" 
                 className="w-full h-full object-cover shadow-lg"
               />

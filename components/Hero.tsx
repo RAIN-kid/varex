@@ -9,18 +9,18 @@ import { ChevronRight } from 'lucide-react';
 const slidesData = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070&auto=format&fit=crop',
-    highlight: 'Engineering Solutions.' // Inaungana na "Delivering" kuwa "Delivering Engineering Solutions"[cite: 1]
+    image: '/images/varex-hero1.avif',
+    highlight: 'Engineering Solutions.' // Inaungana na "Delivering" kuwa "Delivering Engineering Solutions"
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop',
-    highlight: 'Industrial Equipment.' // Inaungana na "Delivering" kuwa "Delivering Industrial Equipment"[cite: 1]
+    image: '/images/varex-hero2.avif',
+    highlight: 'Industrial Equipment.' // Inaungana na "Delivering" kuwa "Delivering Industrial Equipment"
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1581092335397-9583eb92d232?q=80&w=2070&auto=format&fit=crop',
-    highlight: 'Cathodic Protection.' // Inaungana na "Delivering" kuwa "Delivering Cathodic Protection"[cite: 1]
+    image: '/images/varex-hero3.jpg',
+    highlight: 'Cathodic Protection.' // Inaungana na "Delivering" kuwa "Delivering Cathodic Protection"
   }
 ];
 

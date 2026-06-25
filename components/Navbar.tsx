@@ -81,8 +81,7 @@ export default function Navbar() {
                     <Link href="/services#fiber" className="px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-orange border-b border-gray-100">Fiber Optic and IT Services</Link>
                     <Link href="/services#cathodic" className="px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-orange border-b border-gray-100">Cathodic Protection Services </Link>
                     <Link href="/services#cathodic2" className="px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-orange border-b border-gray-100">Cathodic Protection Applications</Link>
-                    <Link href="/services#pumps" className="px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-orange border-b border-gray-100">Pumps & Compressors</Link>
-                    <Link href="/services#special" className="px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-orange">Specialized equipment</Link>
+                    
                   </div>
                 </div>
               </div>
@@ -103,6 +102,8 @@ export default function Navbar() {
                     <Link href="/supply#communication" className="px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-orange border-b border-gray-100">Communication System</Link>
                     <Link href="/supply#gas" className="px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-orange border-b border-gray-100">Gas Systems</Link>
                     <Link href="/supply#cathodic" className="px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-orange border-b border-gray-100">Cathodic Protection Systems</Link>
+                    <Link href="/services#pumps" className="px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-orange border-b border-gray-100">Pumps & Compressors</Link>
+                    <Link href="/services#special" className="px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-orange">Specialized equipment</Link>
                     <Link href="/supply#served" className="px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-orange border-b border-gray-100">Industries served</Link>
                     <Link href="/supply#control" className="px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-orange">Process Control</Link>
                   </div>

@@ -1,20 +1,25 @@
 'use client';
 
-import { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Zap, Gauge, Settings, Wind, Radio, Cpu, 
-  ArrowRight, CheckCircle2, Box, ShieldCheck, Factory, PhoneCall
+  ArrowRight, CheckCircle2, Box, ShieldCheck, Factory, PhoneCall, Droplet, Wrench
 } from 'lucide-react';
 import Link from 'next/link';
 
-// Data imesomwa kwa kina kutoka kwenye PDF. Hakuna kilichoachwa.
+// Data Kamili Imejumuisha Pumps na Specialized Equipment
 const supplyData = [
   {
     id: 'electrical',
     title: 'Electrical Equipment',
     icon: <Zap size={20} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=2070&auto=format&fit=crop',
+    images: [
+      '/images/scope-electrical1.jpeg',
+      '/images/scope-electrical2.jpeg',
+      '/images/scope-electrical3.jpeg',
+      '/images/scope-electrical4.jpeg'
+    ],
     items: [
       'HV/MV/LV cables & switchgear', 
       'ACB, VCB, contactors, relays & drives', 
@@ -26,7 +31,11 @@ const supplyData = [
     id: 'sensors',
     title: 'Instrumentation & Sensors',
     icon: <Gauge size={20} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop',
+    images: [
+      '/images/scope-sensor1.jpeg',
+      '/images/scope-sensor2.jpeg',
+      '/images/scope-sensor3.jpeg'
+    ],
     items: [
       'Flowmeters, level transmitters & pressure sensors', 
       'Air flow, proximity, pH & conductivity sensors', 
@@ -38,7 +47,11 @@ const supplyData = [
     id: 'conveyor',
     title: 'Conveyor Systems',
     icon: <Settings size={20} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1581092162384-8987c1d64718?q=80&w=2070&auto=format&fit=crop',
+    images: [
+      '/images/scope-conveyor1.jpeg',
+      '/images/scope-conveyor2.jpeg',
+      '/images/scope-conveyor3.jpeg'
+    ],
     items: [
       'Conveyor belts, pulleys, and idlers', 
       'Belt scales and tracking systems', 
@@ -49,7 +62,11 @@ const supplyData = [
     id: 'control',
     title: 'Process Control Instruments',
     icon: <Cpu size={20} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=2070&auto=format&fit=crop',
+    images: [
+      '/images/scope-process1.jpeg',
+      '/images/scope-process2.jpeg',
+      '/images/scope-process3.jpeg'
+    ],
     items: [
       'Valves & Limit switches', 
       'Pneumatic actuators', 
@@ -62,7 +79,10 @@ const supplyData = [
     id: 'communication',
     title: 'Communication System',
     icon: <Radio size={20} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2070&auto=format&fit=crop',
+    images: [
+      '/images/scope-commu1.jpeg',
+      '/images/scope-commu2.jpeg'
+    ],
     items: [
       'Leaky feeder communication systems', 
       'Amplifiers, splitters, and power supply units'
@@ -72,23 +92,65 @@ const supplyData = [
     id: 'gas',
     title: 'Gas Systems',
     icon: <Wind size={20} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1581092335397-9583eb92d232?q=80&w=2070&auto=format&fit=crop',
+    images: [
+      '/images/scope-gas1.jpeg',
+      '/images/scope-gas2.jpeg'
+    ],
     items: [
       'Nitrogen and oxygen generation systems', 
       'Pressure vessels and related equipment'
     ]
   },
   {
+    id: 'pumps',
+    title: 'Pumps & Compressors',
+    icon: <Droplet size={20} strokeWidth={1.5} />,
+    images: [
+      '/images/scope-pump1.jpeg',
+      '/images/scope-pump2.jpeg',
+      '/images/scope-pump3.jpeg'
+    ],
+    items: [
+      'Chemical, slurry, and dosing pumps', 
+      'Progressive cavity pumps', 
+      'Dewatering and drainage pumps', 
+      'Compressors, air dryers, and filtration'
+    ]
+  },
+  {
+    id: 'special',
+    title: 'Specialized Equipment',
+    icon: <Wrench size={20} strokeWidth={1.5} />,
+    images: [
+      '/images/scope-special1.jpeg',
+      '/images/scope-special2.jpeg',
+      '/images/scope-special3.jpeg',
+      '/images/scope-special4.jpeg',
+      '/images/scope-special5.jpeg'
+    ],
+    items: [
+      'Larox press filter machines', 
+      'Exciters & Reactors', 
+      'Conveyor belt weightometers', 
+      'Carbon regeneration kilns', 
+      'Thermal oil heaters & Gold room rectifiers',
+      'Oxygen plants'
+    ]
+  },
+  {
     id: 'cathodic',
     title: 'Cathodic Protection Systems',
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2069&auto=format&fit=crop',
+    images: [
+      '/images/scope-catho1.jpg',
+      '/images/scope-catho2.jpg',
+      '/images/scope-catho3.jpg'
+    ],
     items: [
       'Anodes (Zn, Mg, Al, Ti)', 
       'Transformer rectifier unit (1Ø and 3Ø)', 
       'Reference electrodes and coupons', 
-      'Cables (double insulation)', 
-      'Corrosion probes', 
+      'Cables (double insulation) & Corrosion probes', 
       'Cathodic protection junction box and test'
     ]
   },
@@ -96,7 +158,9 @@ const supplyData = [
     id: 'served',
     title: 'Industries Served',
     icon: <Factory size={20} strokeWidth={1.5} />,
-    image: 'https://images.unsplash.com/photo-1581092746498-1e4e2694b80b?q=80&w=2070&auto=format&fit=crop',
+    images: [
+      'varex-logo.jpeg'
+    ],
     items: [
       'Mining', 
       'Oil & Gas', 
@@ -108,6 +172,49 @@ const supplyData = [
     ]
   }
 ];
+
+// Component ya Slider ya Picha Kwenye Kadi (Ili Picha Zisi Zoom-in Vibaya)
+const SupplyImageSlider = ({ images, title }: { images: string[], title: string }) => {
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const timer = setInterval(() => {
+      setIdx((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    }, 4500); // Picha zinabadilika kwa ulaini kila baada ya sekunde 4.5
+    return () => clearInterval(timer);
+  }, [images]);
+
+  return (
+    <div className="w-full h-full relative bg-gray-100">
+      <AnimatePresence initial={false}>
+        <motion.img
+          key={idx}
+          src={images[idx]}
+          alt={`${title} image ${idx + 1}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          // Object cover bila scale-105 inaondoa lile tatizo la kujizoom
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </AnimatePresence>
+      
+      {/* Vidoti vya kuonyesha picha inayoendelea (Vinaonekana chini kulia) */}
+      {images.length > 1 && (
+        <div className="absolute bottom-3 right-3 flex gap-1.5 z-20 bg-black/20 px-2 py-1 rounded-full backdrop-blur-sm">
+          {images.map((_, i) => (
+            <div 
+              key={i} 
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === idx ? 'w-4 bg-brand-orange' : 'w-1.5 bg-white/70'}`} 
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default function SupplyScopePage() {
 
@@ -131,7 +238,7 @@ export default function SupplyScopePage() {
       <section className="relative h-[30vh] min-h-[250px] bg-brand-blue flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=2070&auto=format&fit=crop" 
+            src="images/operation2.png" 
             alt="Industrial Supply Scope" 
             className="w-full h-full object-cover"
           />
@@ -177,20 +284,19 @@ export default function SupplyScopePage() {
             {supplyData.map((category, idx) => (
               <motion.div 
                 key={category.id}
-                id={category.id} // Inafanya hash scrolling ifanye kazi vizuri
+                id={category.id} // Hash scrolling anchor
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.1 }}
-                className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col scroll-mt-28"
+                className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col scroll-mt-28"
               >
-                <div className="h-40 w-full relative overflow-hidden group">
-                  <img 
-                    src={category.image} 
-                    alt={category.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute top-3 left-3 w-10 h-10 bg-white/95 backdrop-blur-sm rounded-lg flex items-center justify-center text-brand-orange shadow-sm">
+                {/* Picha imefanywa kubwa kidogo (h-52) ili iweze kuonyesha details bila kubana */}
+                <div className="h-52 w-full relative overflow-hidden">
+                  <SupplyImageSlider images={category.images} title={category.title} />
+                  
+                  {/* Icon juu kushoto */}
+                  <div className="absolute top-3 left-3 w-10 h-10 bg-white/95 backdrop-blur-sm rounded-lg flex items-center justify-center text-brand-orange shadow-sm z-20">
                     {category.icon}
                   </div>
                 </div>
@@ -225,9 +331,28 @@ export default function SupplyScopePage() {
         </div>
       </section>
 
-      {/* 3. VIBRANT BOTTOM CTA (Imebadilishwa Rangi na Muundo Kuondoa Kufanana) */}
+      {/* 3. PARTNER BRANDS SHOWCASE (Picha Moja Kubwa Inayoonyesha Brands Zote) */}
+      <section className="py-16 bg-white border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="mb-10 text-center max-w-2xl mx-auto">
+            <h2 className="text-brand-orange font-bold uppercase tracking-widest text-sm mb-2">Global Network</h2>
+            <h3 className="text-2xl md:text-3xl font-extrabold text-brand-blue">
+              Trusted by leading brands
+            </h3>
+          </div>
+          
+          <div className="w-100 max-w-5xl mx-auto rounded-2xl overflow-hidden bg-gray-50 p-4 border border-gray-100 shadow-sm">
+            <img 
+              src="/images/scope-brands.jpeg" 
+              alt="Our Supply Partners and Brands" 
+              className="w-100 h-auto object-contain rounded-xl"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 4. VIBRANT BOTTOM CTA */}
       <section className="py-20 bg-brand-orange relative overflow-hidden">
-        {/* Abstract Background Elements ili isionekane flat */}
         <div className="absolute top-0 right-0 -mt-16 -mr-16 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 -mb-16 -ml-16 w-48 h-48 bg-black opacity-10 rounded-full blur-2xl"></div>
 

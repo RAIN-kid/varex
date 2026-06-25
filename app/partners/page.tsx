@@ -120,7 +120,7 @@ export default function PartnersPage() {
       <section className="relative h-[35vh] min-h-[300px] bg-brand-blue flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop" 
+            src="images/partners.jpg" 
             alt="Varex Global Partners" 
             className="w-full h-full object-cover"
           />
